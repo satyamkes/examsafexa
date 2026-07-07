@@ -3,14 +3,13 @@
 import { motion } from "framer-motion";
 import { MapPin, Users, Building2, MapIcon, MessageCircleHeart } from "lucide-react";
 
-// NOTE: Placeholder stats + city pins for Phase 1 — swap for real, live data in Phase 2.
 const CITY_PINS = [
-  { name: "Delhi NCR", top: "22%", left: "34%" },
-  { name: "Prayagraj", top: "38%", left: "42%" },
-  { name: "Mumbai", top: "58%", left: "22%" },
-  { name: "Bengaluru", top: "78%", left: "34%" },
-  { name: "Kolkata", top: "44%", left: "68%" },
-  { name: "Hyderabad", top: "66%", left: "44%" },
+  { name: "Delhi NCR", top: "28%", left: "39%" },
+  { name: "Prayagraj", top: "43%", left: "50%" },
+  { name: "Mumbai", top: "63%", left: "34%" },
+  { name: "Bengaluru", top: "82%", left: "43%" },
+  { name: "Kolkata", top: "51%", left: "71%" },
+  { name: "Hyderabad", top: "68%", left: "49%" },
 ];
 
 const STATS = [
@@ -24,43 +23,50 @@ export function Stats() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        {/* Illustrated India map with pinned example cities — placeholder graphic */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="relative mx-auto aspect-[4/5] w-full max-w-md rounded-3xl bg-navy-50 p-6"
+          className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-navy-900/10 bg-navy-50 shadow-card"
         >
-          <svg
-            viewBox="0 0 200 260"
-            className="absolute inset-0 h-full w-full p-10 opacity-90"
-            aria-hidden="true"
-          >
-            {/* Simplified, illustrative landmass silhouette — not geographically precise */}
-            <path
-              d="M100 5 C130 5 145 25 150 45 C165 55 175 75 168 95 C185 100 190 125 178 145 C182 165 170 185 150 195 C148 215 130 235 108 240 C95 250 78 250 68 238 C50 232 40 215 42 195 C25 188 18 168 28 150 C15 138 15 115 30 100 C25 80 38 60 58 52 C60 32 78 12 100 5 Z"
-              fill="white"
-              stroke="#0F2A5E"
-              strokeOpacity="0.12"
-              strokeWidth="2"
-            />
-          </svg>
+          <iframe
+            title="India exam center coverage map"
+            aria-label="OpenStreetMap view of India with highlighted ExamSafexa cities"
+            className="absolute inset-0 h-full w-full scale-[1.02] border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=67.0%2C6.0%2C98.0%2C37.5&layer=mapnik"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-navy-900/10" />
+          <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-navy-900 shadow-card">
+            Live India map
+          </div>
 
           {CITY_PINS.map((pin) => (
             <div
               key={pin.name}
-              className="absolute flex -translate-x-1/2 -translate-y-full flex-col items-center"
+              className="pointer-events-none absolute flex -translate-x-1/2 -translate-y-full flex-col items-center"
               style={{ top: pin.top, left: pin.left }}
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-gradient text-white shadow-soft">
-                <MapPin className="h-3.5 w-3.5" />
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-brand-gradient text-white shadow-soft ring-4 ring-white/80">
+                <span className="absolute h-12 w-12 rounded-full bg-teal-500/20" />
+                <MapPin className="relative h-4 w-4" />
               </div>
               <span className="mt-1 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-[10px] font-medium text-navy-900 shadow-card">
                 {pin.name}
               </span>
             </div>
           ))}
+
+          <a
+            className="absolute bottom-4 right-4 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-teal-700 shadow-card hover:text-navy-900"
+            href="https://www.openstreetmap.org/#map=5/22.973/78.657"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open map
+          </a>
         </motion.div>
 
         {/* Stat grid */}
